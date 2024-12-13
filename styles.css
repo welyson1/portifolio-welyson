@@ -173,3 +173,153 @@ main {
     background: #0056b3; /* Torna o botão mais escuro ao passar o mouse */
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Estilo para o botão "Ver Timeline" */
+.timeline-button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 24px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.timeline-button:hover {
+    background-color: #0056b3; /* Botão mais escuro ao passar o mouse */
+}
+
+/* Estilo para o modal da timeline */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Fundo semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Garante que esteja acima dos outros elementos */
+    align-items: center; /* Alinha o modal ao topo */
+    overflow-y: visible; /* Garante visibilidade completa */
+}
+
+/* Contêiner da timeline */
+.timeline-content {
+    position: relative;
+    padding: 30px;
+    overflow-y: auto; /* Permite rolagem interna */
+    max-height: 80vh; /* Limita a altura do modal */
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Linha central separada */
+.timeline-line {
+    position: absolute;
+    width: 4px;
+    background: #007BFF; /* Cor da linha */
+    top: 100px; /* Ajuste dinâmico para começar abaixo do título */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+}
+
+/* Estilo de cada item */
+.timeline-item {
+    position: relative;
+    margin: 40px 0;
+    width: calc(50% - 40px);
+    padding: 20px 30px;
+    background: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+/* Alterna os itens entre esquerda e direita */
+.timeline-item.left {
+    left: 0;
+    margin-right: auto;
+}
+
+.timeline-item.right {
+    right: 0;
+    margin-left: auto;
+}
+
+/* Data de cada item */
+.timeline-date {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.timeline-item.left .timeline-date {
+    right: -120px;
+}
+
+.timeline-item.right .timeline-date {
+    left: -120px;
+}
+
+/* Detalhes do item */
+.timeline-details h3 {
+    margin: 0;
+    font-size: 1.4em;
+    color: #333;
+}
+
+.timeline-details p {
+    margin: 5px 0 0;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Botão de fechar */
+.close-timeline {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.close-timeline:hover {
+    background: darkred;
+}

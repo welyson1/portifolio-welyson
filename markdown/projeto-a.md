@@ -1,6 +1,6 @@
 ---
 title: Projeto A
-description: Descrição do Projeto A
+description: O projeto foi concluído com sucesso, entregando uma solução eficiente para o cliente.
 tags: Tag1, Tag2
 thumbnail: OIP.jpg
 dataInicio: 2023-11-01 

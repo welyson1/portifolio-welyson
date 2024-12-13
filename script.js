@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const portfolio = document.getElementById('portfolio'); // Referência ao elemento onde os projetos serão exibidos
 
     // Lista de arquivos Markdown simulados
-    const files = ['markdown/projeto-a.md', 'markdown/projeto-b.md', 'markdown/projeto-c.md', 'markdown/projeto-d.md'];
+    const files = ['markdown/projeto-a.md', 'markdown/projeto-b.md', 'markdown/projeto-c.md', 'markdown/projeto-d.md', 'markdown/projeto-d.md', 'markdown/projeto-d.md'];
 
     // Função para extrair metadados do arquivo Markdown
     function extractMetadata(markdown) {
@@ -152,6 +152,80 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.querySelector('.modal');
         if (modal) modal.remove();
     };
+
+    function renderTimeline(files) {
+        // Filtra e ordena os projetos importantes
+        const importantProjects = files
+            .filter(file => file.metadata.importante)
+            .sort((a, b) => new Date(b.metadata.dataInicio) - new Date(a.metadata.dataInicio)); // Ordena por data
+    
+        // Cria o modal
+        const modal = document.createElement('div');
+        modal.classList.add('modal');
+    
+        // Cria o contêiner da timeline
+        const timelineContent = document.createElement('div');
+        timelineContent.classList.add('timeline-content');
+        timelineContent.innerHTML = `<h2>Timeline de Projetos Importantes</h2>`;
+    
+        // Adiciona os itens da timeline
+        importantProjects.forEach(({ metadata }, index) => {
+            const timelineItem = document.createElement('div');
+            timelineItem.classList.add('timeline-item', index % 2 === 0 ? 'left' : 'right'); // Alterna entre esquerda e direita
+            timelineItem.innerHTML = `
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">${new Date(metadata.dataInicio).toLocaleDateString()}</div>
+                <div class="timeline-details">
+                    <h3>${metadata.title}</h3>
+                    <p>${metadata.description}</p>
+                </div>
+            `;
+            timelineContent.appendChild(timelineItem);
+        });
+    
+        // Adiciona a linha central dinamicamente
+        const timelineLine = document.createElement('div');
+        timelineLine.classList.add('timeline-line');
+        timelineContent.appendChild(timelineLine);
+    
+        // Botão de fechar
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Fechar';
+        closeButton.classList.add('close-timeline');
+        closeButton.addEventListener('click', () => modal.remove());
+    
+        // Adiciona os elementos ao modal
+        modal.appendChild(timelineContent);
+        modal.appendChild(closeButton);
+        document.body.appendChild(modal);
+    
+        // Ajusta dinamicamente a altura da linha
+        setTimeout(() => {
+            const contentHeight = timelineContent.scrollHeight; // Altura total do conteúdo
+            timelineLine.style.height = `${contentHeight}px`;
+        }, 100); // Atraso para garantir que o DOM esteja renderizado
+    }
+    
+    // Função para carregar os arquivos e exibir a timeline
+    async function loadTimeline() {
+        const processedFiles = [];
+        for (const file of files) {
+            try {
+                const response = await fetch(file);
+                if (!response.ok) throw new Error(`Erro ao carregar o arquivo: ${response.statusText}`);
+                const markdown = await response.text();
+                const { metadata, content } = extractMetadata(markdown);
+                if (metadata) metadata.file = file;
+                processedFiles.push({ metadata, content });
+            } catch (error) {
+                console.error(`Erro ao carregar ${file}:`, error);
+            }
+        }
+        renderTimeline(processedFiles); // Renderiza a timeline com os projetos importantes
+    }
+
+    window.loadTimeline = loadTimeline;
+
 
     // Inicializa o carregamento dos arquivos Markdown
     loadMarkdownFiles();
