@@ -1,0 +1,175 @@
+/* Estilos Globais */
+body {
+    font-family: Arial, sans-serif; /* Define a fonte padrão */
+    line-height: 1.6; /* Ajusta o espaçamento entre linhas */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9; /* Cor de fundo clara */
+    color: #333; /* Cor do texto */
+}
+
+/* Container principal */
+#app {
+    max-width: 900px; /* Largura máxima do conteúdo */
+    margin: 20px auto; /* Centraliza o conteúdo */
+    padding: 20px;
+    background: #fff; /* Fundo branco */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilo do Cabeçalho */
+header h1 {
+    text-align: center; /* Centraliza o título */
+    margin-bottom: 10px;
+}
+
+header p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #666; /* Texto cinza */
+}
+
+/* Layout Principal */
+main {
+    display: flex; /* Usa flexbox */
+    flex-direction: column; /* Direção vertical */
+    gap: 20px; /* Espaçamento entre elementos */
+}
+
+/* Seções agrupadas por tags */
+.section {
+    margin-bottom: 30px; /* Espaçamento inferior */
+}
+
+.section h2 {
+    font-size: 1.5em; /* Tamanho maior para títulos */
+    border-bottom: 2px solid #ccc; /* Linha abaixo do título */
+    padding-bottom: 5px; /* Espaçamento abaixo do texto */
+    margin-bottom: 10px;
+}
+
+/* Estilo dos cartões */
+.card {
+    display: flex; /* Layout horizontal */
+    gap: 15px; /* Espaçamento entre imagem e conteúdo */
+    margin-bottom: 15px; /* Espaçamento inferior */
+    align-items: center; /* Alinhamento vertical centralizado */
+    background: #fafafa; /* Fundo do cartão */
+    padding: 10px;
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.card img {
+    width: 100px; /* Largura da imagem */
+    height: 100px; /* Altura da imagem */
+    object-fit: cover; /* Ajusta a imagem para preencher o espaço */
+    border-radius: 8px; /* Bordas arredondadas */
+}
+
+.card-content {
+    flex-grow: 1; /* O conteúdo ocupa o espaço restante */
+}
+
+.card-content h3 {
+    margin: 0;
+    font-size: 1.2em; /* Tamanho do título do cartão */
+    color: #007BFF; /* Cor azul */
+}
+
+.card-content p {
+    margin: 5px 0;
+    color: #666; /* Cor cinza */
+}
+
+.card-content .tags {
+    margin-top: 5px; /* Espaçamento acima das tags */
+}
+
+.card-content .tags span {
+    display: inline-block; /* Permite múltiplos itens lado a lado */
+    background: #007BFF; /* Fundo azul */
+    color: white; /* Texto branco */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 2px 6px; /* Espaçamento interno */
+    font-size: 0.8em; /* Tamanho da fonte reduzido */
+    margin-right: 5px; /* Espaçamento entre tags */
+}
+
+/* Estilo do Modal */
+.modal {
+    position: fixed; /* Fixa o modal na tela */
+    top: 0;
+    left: 0;
+    width: 100%; /* Ocupa toda a largura */
+    height: 100%; /* Ocupa toda a altura */
+    background: rgba(0, 0, 0, 0.8); /* Fundo semitransparente */
+    display: flex; /* Usa flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    z-index: 1000; /* Garante que esteja acima de outros elementos */
+}
+
+.modal-content {
+    background: #fff; /* Fundo branco */
+    padding: 20px;
+    border-radius: 8px; /* Bordas arredondadas */
+    max-width: 80%; /* Largura máxima */
+    max-height: 80%; /* Altura máxima */
+    overflow-y: auto; /* Permite rolagem se necessário */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    position: relative; /* Posicionamento para o botão de fechar */
+}
+
+.modal-content button {
+    position: absolute; /* Posicionamento no canto superior direito */
+    top: 10px;
+    right: 10px;
+    background: red; /* Fundo vermelho */
+    color: white; /* Texto branco */
+    border: none; /* Remove borda padrão */
+    padding: 8px 12px;
+    cursor: pointer; /* Mostra o cursor de clique */
+    border-radius: 4px; /* Bordas arredondadas */
+}
+
+/* Botão de fechar no modal ao passar o mouse */
+.modal-content button:hover {
+    background: darkred; /* Torna o botão mais escuro */
+}
+
+/* Adicional para responsividade */
+@media (max-width: 600px) {
+    .card {
+        flex-direction: column; /* Altera para layout vertical em telas menores */
+        align-items: flex-start; /* Alinha ao início */
+    }
+
+    .card img {
+        width: 100%; /* Ajusta largura para ocupar todo o espaço */
+        height: auto; /* Mantém proporção */
+    }
+
+    .modal-content {
+        max-width: 95%; /* Ajusta largura em telas pequenas */
+    }
+}
+
+.view-more {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1em;
+}
+
+.view-more:hover {
+    background: #0056b3; /* Torna o botão mais escuro ao passar o mouse */
+}
+
