@@ -1,37 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const portfolio = document.getElementById('portfolio'); // Referência ao elemento onde os projetos serão exibidos
 
-    // Detecta automaticamente o caminho base do GitHub Pages
-    const basePath = window.location.pathname.includes('portifolio-welyson')
-    ? '/portifolio-welyson'
-    : '';
-
-    // Caminho completo dos arquivos Markdown
+    // Lista de arquivos Markdown simulados
     const files = [
-    `${basePath}/markdown/projeto-a.md`,
-    `${basePath}/markdown/projeto-b.md`,
-    `${basePath}/markdown/projeto-c.md`,
-    `${basePath}/markdown/projeto-d.md`,
+        'https://github.com/welyson1/portifolio-welyson/markdown/projeto-a.md', 
+        'https://github.com/welyson1/portifolio-welyson/markdown/projeto-b.md', 
+        'https://github.com/welyson1/portifolio-welyson/markdown/projeto-c.md', 
+        'https://github.com/welyson1/portifolio-welyson/markdown/projeto-c.md'
     ];
-
-    // Função para carregar os arquivos Markdown
-    async function loadMarkdownFiles() {
-    const processedFiles = [];
-    for (const file of files) {
-        try {
-            const response = await fetch(file);
-            if (!response.ok) throw new Error(`Erro ao carregar o arquivo: ${response.statusText}`);
-            const markdown = await response.text();
-            const { metadata, content } = extractMetadata(markdown);
-            if (metadata) metadata.file = file; // Adiciona o nome do arquivo aos metadados
-            processedFiles.push({ metadata, content });
-        } catch (error) {
-            console.error(`Erro ao carregar ${file}:`, error);
-        }
-    }
-    renderPortfolio(processedFiles); // Renderiza os projetos
-    }
-
 
     // Função para extrair metadados do arquivo Markdown
     function extractMetadata(markdown) {
@@ -138,6 +114,24 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         return card;
+    }
+
+    // Carrega e processa os arquivos Markdown
+    async function loadMarkdownFiles() {
+        const processedFiles = [];
+        for (const file of files) {
+            try {
+                const response = await fetch(file); // Faz a requisição do arquivo
+                if (!response.ok) throw new Error(`Erro ao carregar o arquivo: ${response.statusText}`);
+                const markdown = await response.text();
+                const { metadata, content } = extractMetadata(markdown);
+                if (metadata) metadata.file = file;
+                processedFiles.push({ metadata, content });
+            } catch (error) {
+                console.error(`Erro ao carregar ${file}:`, error);
+            }
+        }
+        renderPortfolio(processedFiles); // Renderiza os projetos após o processamento
     }
 
     // Exibe o conteúdo de um arquivo Markdown em um modal
