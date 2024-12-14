@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lista de arquivos Markdown simulados
     const files = [
-        'https://github.com/welyson1/portifolio-welyson/markdown/projeto-a.md', 
-        'https://github.com/welyson1/portifolio-welyson/markdown/projeto-b.md', 
-        'https://github.com/welyson1/portifolio-welyson/markdown/projeto-c.md', 
-        'https://github.com/welyson1/portifolio-welyson/markdown/projeto-c.md'
+        'markdown/projeto-a.md', 
+        'markdown/projeto-b.md', 
+        'markdown/projeto-c.md', 
+        'markdown/projeto-c.md'
     ];
 
     // Função para extrair metadados do arquivo Markdown
