@@ -323,3 +323,27 @@ main {
 .close-timeline:hover {
     background: darkred;
 }
+
+
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+}
+
+table th, table td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+table th {
+    background-color: #f4f4f9;
+    color: #333;
+    font-weight: bold;
+}

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const portfolio = document.getElementById('portfolio'); // Referência ao elemento onde os projetos serão exibidos
 
     // Lista de arquivos Markdown simulados
-    const files = ['markdown/projeto-a.md', 'markdown/projeto-b.md', 'markdown/projeto-c.md', 'markdown/projeto-d.md', 'markdown/projeto-d.md', 'markdown/projeto-d.md'];
+    const files = ['markdown/projeto-a.md', 'markdown/projeto-b.md', 'markdown/projeto-c.md', 'markdown/projeto-d.md'];
 
     // Função para extrair metadados do arquivo Markdown
     function extractMetadata(markdown) {

@@ -1,5 +1,5 @@
 ---
-title: Projeto B
+title: Projeto C
 description: Descrição do Projeto A
 tags: Tag3, Tag4
 thumbnail: OIP.jpg
