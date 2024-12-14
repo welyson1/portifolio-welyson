@@ -1,0 +1,6 @@
+# Configuração para garantir que a pasta "markdown" e os arquivos ".md" sejam incluídos no deploy
+include:
+  - markdown
+  - markdown/*.md
+exclude:
+  - node_modules
