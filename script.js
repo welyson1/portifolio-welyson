@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'markdown/projeto-a.md', 
         'markdown/projeto-b.md', 
         'markdown/projeto-c.md', 
-        'markdown/projeto-c.md'
+        'markdown/projeto-d.md'
     ];
 
     // Função para extrair metadados do arquivo Markdown
