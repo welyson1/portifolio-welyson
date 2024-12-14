@@ -8,10 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Caminho completo dos arquivos Markdown
     const files = [
-    `${basePath}/projeto-a.md`,
-    `${basePath}/projeto-b.md`,
-    `${basePath}/projeto-c.md`,
-    `${basePath}/projeto-d.md`,
+    `${basePath}/markdown/projeto-a.md`,
+    `${basePath}/markdown/projeto-b.md`,
+    `${basePath}/markdown/projeto-c.md`,
+    `${basePath}/markdown/projeto-d.md`,
     ];
 
     // Função para carregar os arquivos Markdown
