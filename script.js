@@ -106,14 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function createShareableLink(file) {
         let baseURL;
         if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-            // Ambiente local
-            baseURL = `${window.location.origin}/`;
+            baseURL = `${window.location.origin}/`; // Para local
         } else {
-            // Ambiente GitHub Pages
-            baseURL = `${window.location.origin}/portifolio-welyson/`;
+            baseURL = `${window.location.origin}/portifolio-welyson/`; // Para GitHub Pages
         }
-        return `${baseURL}${file}`;
-    }    
+        return `${baseURL}?file=${file}`; // Gera o link com ?file=
+    }       
 
     window.copyToClipboard = function(link, button) {
         // Copia o link para a área de transferência
