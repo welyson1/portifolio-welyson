@@ -3,10 +3,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lista de arquivos Markdown simulados
     const files = [
-        'markdown/projeto-a.md', 
-        'markdown/projeto-b.md', 
-        'markdown/projeto-c.md', 
-        'markdown/projeto-d.md'
+        'markdown/Analisia.md', 
+        'markdown/utfpr.md', 
+        'markdown/ColabCom.md', 
+        'markdown/Satisfying-you.md',
+        'markdown/larSaoVicente.md',
+        'markdown/encora.md',
+        'markdown/nokia.md',
+        'markdown/driva.md',
+        'markdown/PRGEngenharia.md',
+        'markdown/dioazureAZ-204.md',
+        'markdown/youtube.md',
+        'markdown/az-900.md'
     ];
 
     
@@ -177,10 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const filePath = file.startsWith('markdown/') ? file : `markdown/${file}`; // Garante o caminho correto
         viewFile(filePath); // Renderiza o conteúdo do arquivo
     }
-    
-
-
-    
+        
     // Função para criar um cartão individual
     function createCard(metadata) {
         const card = document.createElement('div'); // Cria o elemento do cartão

@@ -1,11 +1,11 @@
 ---
-title: Projeto C
+title: Engenharia de software
 description: Descrição do Projeto A
-tags: Tag3, Tag4
+tags: UTFPR, Software
 thumbnail: OIP.jpg
-dataInicio: 2021-11-01 
-dataFim: 2023-12-01 
-colecao: Web Development 
+dataInicio: 2021-03-01 
+dataFim: 2024-12-30 
+colecao: Formação acadêmica 
 importante: true
 ---
 
