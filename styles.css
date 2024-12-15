@@ -97,19 +97,7 @@ main {
     margin-right: 5px; /* Espaçamento entre tags */
 }
 
-/* Estilo do Modal */
-.modal {
-    position: fixed; /* Fixa o modal na tela */
-    top: 0;
-    left: 0;
-    width: 100%; /* Ocupa toda a largura */
-    height: 100%; /* Ocupa toda a altura */
-    background: rgba(0, 0, 0, 0.8); /* Fundo semitransparente */
-    display: flex; /* Usa flexbox */
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
-    z-index: 1000; /* Garante que esteja acima de outros elementos */
-}
+
 
 .modal-content {
     background: #fff; /* Fundo branco */
@@ -120,6 +108,9 @@ main {
     overflow-y: auto; /* Permite rolagem se necessário */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
     position: relative; /* Posicionamento para o botão de fechar */
+    
+    max-height: calc(80vh - 60px); /* Considera a altura do cabeçalho para evitar sobreposição */
+    margin-top: 10px; /* Espaçamento abaixo do cabeçalho */
 }
 
 .modal-content button {
@@ -153,6 +144,16 @@ main {
 
     .modal-content {
         max-width: 95%; /* Ajusta largura em telas pequenas */
+    }
+
+    .modal-header {
+        flex-direction: column; /* Alinha os botões em coluna em telas menores */
+        gap: 10px;
+    }
+
+    .modal-header button {
+        width: 100%; /* Botões ocupam toda a largura */
+        margin: 5px 0; /* Margem entre os botões */
     }
 }
 
@@ -228,6 +229,7 @@ main {
     z-index: 1000; /* Garante que esteja acima dos outros elementos */
     align-items: center; /* Alinha o modal ao topo */
     overflow-y: visible; /* Garante visibilidade completa */
+    flex-direction: column;
 }
 
 /* Contêiner da timeline */
@@ -349,22 +351,38 @@ table th {
 }
 
 
-.card-content button {
-    margin: 5px;
+/* Cabeçalho fixo no topo do modal */
+.modal-header {
+    position: sticky; /* Torna o cabeçalho fixo no topo do modal */
+    top: 0; /* Fixa no topo */
+    background-color: #fff; /* Fundo branco para destaque */
+    z-index: 10; /* Garantia de que fique acima do conteúdo */
+    display: flex; /* Alinhamento flexível para os botões */
+    justify-content: flex-end; /* Alinha os botões à direita */
+    align-items: center; /* Centraliza os botões verticalmente */
+    padding: 10px 15px; /* Espaçamento interno */
+    border-bottom: 1px solid #ccc; /* Linha separando cabeçalho do conteúdo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve para destaque */
+}
+
+/* Botões no cabeçalho */
+.modal-header button {
+    margin-left: 10px; /* Espaçamento entre os botões */
     padding: 8px 12px;
     background-color: #007BFF;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.card-content button:hover {
+.modal-header button:hover {
     background-color: #0056b3;
 }
 
-.modal-content input {
-    margin-top: 10px;
-    font-size: 1em;
+.modal-header button.copied {
+    background-color: #28a745; /* Verde para sucesso */
+    transform: scale(1.1); /* Animação de feedback */
 }
-

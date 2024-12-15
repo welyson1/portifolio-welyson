@@ -100,51 +100,88 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Função para gerar URLs compartilháveis
-    function generateShareableURL(filePath) {
-        const baseUrl = window.location.origin; // Obtém o domínio atual
-        const sharedURL = `${baseUrl}/?file=${encodeURIComponent(filePath)}`; // Concatena com o arquivo
-        navigator.clipboard.writeText(sharedURL).then(() => {
-            alert('URL compartilhável copiada para a área de transferência!');
-        }).catch(err => {
-            console.error('Erro ao copiar URL:', err);
-            alert('Não foi possível copiar o URL.');
-        });
+    // Função para criar um link compartilhável
+    function createShareableLink(file) {
+        return `${window.location.origin}?file=${encodeURIComponent(file)}`;
     }
 
-    // Modifique a função `createCard` para incluir o botão de compartilhamento
+    window.copyToClipboard = function(link, button) {
+        // Copia o link para a área de transferência
+        navigator.clipboard.writeText(link)
+            .then(() => {
+                // Adiciona a classe de animação para feedback
+                button.textContent = 'Copiado!';
+                button.classList.add('copied');
+                
+                // Remove a classe após 1 segundo para permitir reutilização
+                setTimeout(() => {
+                    button.textContent = 'Copiar Link';
+                    button.classList.remove('copied');
+                }, 1000);
+            })
+            .catch(err => console.error('Erro ao copiar link:', err));
+    };
+    
+
+    // Função para fechar o modal
+    window.closeModal = function() {
+        const modal = document.querySelector('.modal');
+        if (modal) modal.remove();
+    };
+
+    window.viewFile = async function(file) {
+        try {
+            const response = await fetch(file);
+            if (!response.ok) throw new Error(`Erro ao carregar o arquivo: ${response.statusText}`);
+            
+            const markdown = await response.text();
+            const { content } = extractMetadata(markdown); // Remove metadados
+            const converter = new showdown.Converter();
+            const html = converter.makeHtml(content); // Converte Markdown para HTML
+            
+            const shareableLink = `${window.location.origin}?file=${encodeURIComponent(file)}`;
+    
+            const modal = document.createElement('div');
+            modal.classList.add('modal');
+            modal.innerHTML = `
+                <div class="modal-header">
+                    <button id="copy-link-button" onclick="copyToClipboard('${shareableLink}', this)">Copiar Link</button>
+                    <button onclick="closeModal()">Fechar</button>
+                </div>
+                <div class="modal-content">
+                    ${html}
+                </div>
+            `;
+            document.body.appendChild(modal);
+        } catch (error) {
+            console.error(`Erro ao carregar o arquivo ${file}:`, error);
+        }
+    };
+        
+
+    // Verifica se o parâmetro "file" existe na URL e renderiza o arquivo
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get('file');
+    if (file) {
+        viewFile(file);
+    }
+
+    
+    // Função para criar um cartão individual
     function createCard(metadata) {
-        const card = document.createElement('div');
+        const card = document.createElement('div'); // Cria o elemento do cartão
         card.classList.add('card');
         card.innerHTML = `
-            <img src="${metadata.thumbnail}" alt="${metadata.title}">
-            <div class="card-content">
-                <h3>${metadata.title}</h3>
-                <p>${metadata.description}</p>
-                <p class="tags">${metadata.tags?.map(tag => `<span>${tag}</span>`).join('') || ''}</p>
-                <button onclick="viewFile('${metadata.file}')">Ver Mais</button>
-                <button onclick="generateShareableURL('${metadata.file}')">Copiar URL</button>
+            <img src="${metadata.thumbnail}" alt="${metadata.title}"> <!-- Miniatura do projeto -->
+            <div onclick="viewFile('${metadata.file}')" class="card-content">
+                <h3>${metadata.title}</h3> <!-- Título do projeto -->
+                <p>${metadata.description}</p> <!-- Descrição do projeto -->
+                <p class="tags">${metadata.tags?.map(tag => `<span>${tag}</span>`).join('') || ''}</p> <!-- Lista de tags, se existir -->
+                <!-- <button onclick="viewFile('${metadata.file}')">Ver Mais</button>--> <!-- Botão para visualizar mais detalhes -->
             </div>
         `;
         return card;
     }
-
-
-    // // Função para criar um cartão individual
-    // function createCard(metadata) {
-    //     const card = document.createElement('div'); // Cria o elemento do cartão
-    //     card.classList.add('card');
-    //     card.innerHTML = `
-    //         <img src="${metadata.thumbnail}" alt="${metadata.title}"> <!-- Miniatura do projeto -->
-    //         <div onclick="viewFile('${metadata.file}')" class="card-content">
-    //             <h3>${metadata.title}</h3> <!-- Título do projeto -->
-    //             <p>${metadata.description}</p> <!-- Descrição do projeto -->
-    //             <p class="tags">${metadata.tags?.map(tag => `<span>${tag}</span>`).join('') || ''}</p> <!-- Lista de tags, se existir -->
-    //             <!-- <button onclick="viewFile('${metadata.file}')">Ver Mais</button>--> <!-- Botão para visualizar mais detalhes -->
-    //         </div>
-    //     `;
-    //     return card;
-    // }
 
     // Carrega e processa os arquivos Markdown
     async function loadMarkdownFiles() {
@@ -164,23 +201,23 @@ document.addEventListener('DOMContentLoaded', () => {
         renderPortfolio(processedFiles); // Renderiza os projetos após o processamento
     }
 
-    // Exibe o conteúdo de um arquivo Markdown em um modal
-    window.viewFile = async (file) => {
-        try {
-            const response = await fetch(file);
-            if (!response.ok) throw new Error(`Erro ao carregar o arquivo: ${response.statusText}`);
-            const markdown = await response.text();
-            const { content } = extractMetadata(markdown);
-            const converter = new showdown.Converter();
-            const html = converter.makeHtml(content);
-            const modal = document.createElement('div'); // Cria o modal
-            modal.classList.add('modal');
-            modal.innerHTML = `<div class="modal-content">${html}<button onclick="closeModal()">Fechar</button></div>`;
-            document.body.appendChild(modal);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    // // Exibe o conteúdo de um arquivo Markdown em um modal
+    // window.viewFile = async (file) => {
+    //     try {
+    //         const response = await fetch(file);
+    //         if (!response.ok) throw new Error(`Erro ao carregar o arquivo: ${response.statusText}`);
+    //         const markdown = await response.text();
+    //         const { content } = extractMetadata(markdown);
+    //         const converter = new showdown.Converter();
+    //         const html = converter.makeHtml(content);
+    //         const modal = document.createElement('div'); // Cria o modal
+    //         modal.classList.add('modal');
+    //         modal.innerHTML = `<div class="modal-content">${html}<button onclick="closeModal()">Fechar</button></div>`;
+    //         document.body.appendChild(modal);
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
 
     // Fecha o modal
     window.closeModal = () => {
@@ -260,7 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.loadTimeline = loadTimeline;
-
 
     // Inicializa o carregamento dos arquivos Markdown
     loadMarkdownFiles();
