@@ -100,10 +100,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Função para criar um link compartilhável
     function createShareableLink(file) {
-        return `${window.location.origin}?file=${encodeURIComponent(file)}`;
+        let baseURL;
+        if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+            // Ambiente local
+            baseURL = `${window.location.origin}/`;
+        } else {
+            // Ambiente GitHub Pages
+            baseURL = `${window.location.origin}/portifolio-welyson/`;
+        }
+        return `${baseURL}${file}`;
     }
+    
 
     window.copyToClipboard = function(link, button) {
         // Copia o link para a área de transferência
@@ -133,14 +141,19 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(file);
             if (!response.ok) throw new Error(`Erro ao carregar o arquivo: ${response.statusText}`);
-            
             const markdown = await response.text();
-            const { content } = extractMetadata(markdown); // Remove metadados
-            const converter = new showdown.Converter();
-            const html = converter.makeHtml(content); // Converte Markdown para HTML
-            
-            const shareableLink = `${window.location.origin}?file=${encodeURIComponent(file)}`;
     
+            // Remove os metadados e extrai o conteúdo principal
+            const { content } = extractMetadata(markdown);
+    
+            // Converte o conteúdo Markdown em HTML
+            const converter = new showdown.Converter();
+            const html = converter.makeHtml(content);
+    
+            // Cria o link compartilhável
+            const shareableLink = createShareableLink(file);
+    
+            // Criação do modal com header, botão de cópia e conteúdo
             const modal = document.createElement('div');
             modal.classList.add('modal');
             modal.innerHTML = `
@@ -157,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(`Erro ao carregar o arquivo ${file}:`, error);
         }
     };
+    
         
 
     // Verifica se o parâmetro "file" existe na URL e renderiza o arquivo
