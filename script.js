@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'markdown/projeto-d.md'
     ];
 
+    
+
+
     // Função para extrair metadados do arquivo Markdown
     function extractMetadata(markdown) {
         const metadataRegex = /^---\s*([\s\S]+?)\s*---/; // Regex para capturar metadados entre delimitadores "---"
@@ -110,8 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             baseURL = `${window.location.origin}/portifolio-welyson/`;
         }
         return `${baseURL}${file}`;
-    }
-    
+    }    
 
     window.copyToClipboard = function(link, button) {
         // Copia o link para a área de transferência
@@ -128,8 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 1000);
             })
             .catch(err => console.error('Erro ao copiar link:', err));
-    };
-    
+    };    
 
     // Função para fechar o modal
     window.closeModal = function() {
@@ -171,14 +172,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-        
-
     // Verifica se o parâmetro "file" existe na URL e renderiza o arquivo
-    const params = new URLSearchParams(window.location.search);
-    const file = params.get('file');
+    const params = new URLSearchParams(window.location.search); // Pega os parâmetros da URL
+    const file = params.get('file'); // Extrai o valor do parâmetro "file"
     if (file) {
-        viewFile(file);
+        const filePath = file.startsWith('markdown/') ? file : `markdown/${file}`; // Garante o caminho correto
+        viewFile(filePath); // Renderiza o conteúdo do arquivo
     }
+    
+
 
     
     // Função para criar um cartão individual
@@ -214,30 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         renderPortfolio(processedFiles); // Renderiza os projetos após o processamento
     }
-
-    // // Exibe o conteúdo de um arquivo Markdown em um modal
-    // window.viewFile = async (file) => {
-    //     try {
-    //         const response = await fetch(file);
-    //         if (!response.ok) throw new Error(`Erro ao carregar o arquivo: ${response.statusText}`);
-    //         const markdown = await response.text();
-    //         const { content } = extractMetadata(markdown);
-    //         const converter = new showdown.Converter();
-    //         const html = converter.makeHtml(content);
-    //         const modal = document.createElement('div'); // Cria o modal
-    //         modal.classList.add('modal');
-    //         modal.innerHTML = `<div class="modal-content">${html}<button onclick="closeModal()">Fechar</button></div>`;
-    //         document.body.appendChild(modal);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
-
-    // Fecha o modal
-    window.closeModal = () => {
-        const modal = document.querySelector('.modal');
-        if (modal) modal.remove();
-    };
 
     function renderTimeline(files) {
         // Filtra e ordena os projetos importantes
