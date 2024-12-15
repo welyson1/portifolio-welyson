@@ -19,6 +19,16 @@
             <!-- Sessões baseadas em tags serão carregadas dinamicamente aqui -->
         </main>
     </div>
+    <script>
+        // Verifica se um arquivo é passado como parâmetro e exibe o conteúdo
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const file = params.get('file');
+            if (file) {
+                viewFile(file);
+            }
+        });
+    </script>    
     <!-- Importação da biblioteca Showdown para conversão de Markdown para HTML -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
     <!-- Importação do script JavaScript principal -->

@@ -100,21 +100,51 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Função para criar um cartão individual
+    // Função para gerar URLs compartilháveis
+    function generateShareableURL(filePath) {
+        const baseUrl = window.location.origin; // Obtém o domínio atual
+        const sharedURL = `${baseUrl}/?file=${encodeURIComponent(filePath)}`; // Concatena com o arquivo
+        navigator.clipboard.writeText(sharedURL).then(() => {
+            alert('URL compartilhável copiada para a área de transferência!');
+        }).catch(err => {
+            console.error('Erro ao copiar URL:', err);
+            alert('Não foi possível copiar o URL.');
+        });
+    }
+
+    // Modifique a função `createCard` para incluir o botão de compartilhamento
     function createCard(metadata) {
-        const card = document.createElement('div'); // Cria o elemento do cartão
+        const card = document.createElement('div');
         card.classList.add('card');
         card.innerHTML = `
-            <img src="${metadata.thumbnail}" alt="${metadata.title}"> <!-- Miniatura do projeto -->
-            <div onclick="viewFile('${metadata.file}')" class="card-content">
-                <h3>${metadata.title}</h3> <!-- Título do projeto -->
-                <p>${metadata.description}</p> <!-- Descrição do projeto -->
-                <p class="tags">${metadata.tags?.map(tag => `<span>${tag}</span>`).join('') || ''}</p> <!-- Lista de tags, se existir -->
-                <!-- <button onclick="viewFile('${metadata.file}')">Ver Mais</button>--> <!-- Botão para visualizar mais detalhes -->
+            <img src="${metadata.thumbnail}" alt="${metadata.title}">
+            <div class="card-content">
+                <h3>${metadata.title}</h3>
+                <p>${metadata.description}</p>
+                <p class="tags">${metadata.tags?.map(tag => `<span>${tag}</span>`).join('') || ''}</p>
+                <button onclick="viewFile('${metadata.file}')">Ver Mais</button>
+                <button onclick="generateShareableURL('${metadata.file}')">Copiar URL</button>
             </div>
         `;
         return card;
     }
+
+
+    // // Função para criar um cartão individual
+    // function createCard(metadata) {
+    //     const card = document.createElement('div'); // Cria o elemento do cartão
+    //     card.classList.add('card');
+    //     card.innerHTML = `
+    //         <img src="${metadata.thumbnail}" alt="${metadata.title}"> <!-- Miniatura do projeto -->
+    //         <div onclick="viewFile('${metadata.file}')" class="card-content">
+    //             <h3>${metadata.title}</h3> <!-- Título do projeto -->
+    //             <p>${metadata.description}</p> <!-- Descrição do projeto -->
+    //             <p class="tags">${metadata.tags?.map(tag => `<span>${tag}</span>`).join('') || ''}</p> <!-- Lista de tags, se existir -->
+    //             <!-- <button onclick="viewFile('${metadata.file}')">Ver Mais</button>--> <!-- Botão para visualizar mais detalhes -->
+    //         </div>
+    //     `;
+    //     return card;
+    // }
 
     // Carrega e processa os arquivos Markdown
     async function loadMarkdownFiles() {
